@@ -4,21 +4,25 @@ import json
 import os
 from pathlib import Path
 
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
 
 PANEL_PADDING_X = 28
 PANEL_PADDING_Y = 20
-LINE_GAP = 14
+LINE_GAP = 16
 TITLE_HEIGHT = 34
 BG_COLOR = (235, 211, 168, 255)
 TITLE_COLOR = (107, 65, 28, 255)
+GLYPH_COLOR = (97, 26, 13, 255)
+LABEL_COLOR = (107, 65, 28, 255)
+LABEL_GAP = 10
 
 
-SAMPLE_LINES = [
-    "Аа Бб Вв Гг Дд Ее Жж Зз Ии Йй Кк Лл Мм Нн Оо Пп Рр Сс Тт Уу Фф Хх Цц Чч Шш Щщ Ъъ Ьь Юю Яя Ѝѝ",
-    "Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz",
-    "0123456789  .,:;!?()[]{}<>+-= @ # №  \" '  «» „“  ★ ◆ ● ▲ ▼  → ← ↑ ↓",
+SAMPLE_SECTIONS = [
+    ("Cyrillic-BG", "Аа Бб Вв Гг Дд Ее Жж Зз Ии Йй Кк Лл Мм Нн Оо Пп Рр Сс Тт Уу Фф Хх Цц Чч Шш Щщ Ъъ Ьь Юю Яя Ѝѝ"),
+    ("Russian Extension", "Ёё Ыы Ээ"),
+    ("Latin", "Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz"),
+    ("SDV Used Glyphs", "0123456789  .,:;!?()[]{}<>+-= @ # №  \" '  «» „“  ★ ◆ ● ▲ ▼  → ← ↑ ↓"),
 ]
 
 
@@ -95,14 +99,36 @@ def render_line(draw_target: Image.Image, glyphs: dict[str, dict], line: str, x:
             cursor += 10
             continue
         glyph = Image.open(record["image_path"]).convert("RGBA")
+        alpha = glyph.getchannel("A")
+        tinted = Image.new("RGBA", glyph.size, GLYPH_COLOR)
+        tinted.putalpha(alpha)
+        glyph = tinted
         draw_target.alpha_composite(glyph, (cursor, y + record["yoffset"]))
         cursor += max(1, record["xadvance"])
 
 
+def measure_line(glyphs: dict[str, dict], line: str) -> int:
+    width = 0
+    for char in line:
+        record = glyphs.get(char)
+        if record is None:
+            width += 10
+            continue
+        width += max(1, record["xadvance"])
+    return width
+
+
 def render_sheet(glyphs: dict[str, dict], output_path: Path, title: str, ui_panel_path: Path | None) -> None:
+    label_font = ImageFont.load_default()
     line_height = max((Image.open(record["image_path"]).height + record["yoffset"] for record in glyphs.values()), default=24)
-    width = 1100
-    height = TITLE_HEIGHT + PANEL_PADDING_Y * 2 + len(SAMPLE_LINES) * line_height + (len(SAMPLE_LINES) - 1) * LINE_GAP + 24
+    label_width = max((ImageDraw.Draw(Image.new("RGBA", (1, 1))).textbbox((0, 0), label, font=label_font)[2] for label, _ in SAMPLE_SECTIONS), default=120)
+    widest_line = max((measure_line(glyphs, line) for _, line in SAMPLE_SECTIONS), default=900)
+    total_text = f"And more ... total {len(glyphs)} glyphs"
+    total_width = measure_line(glyphs, total_text)
+    content_width = max(widest_line, total_width)
+    width = max(1180, PANEL_PADDING_X * 2 + label_width + LABEL_GAP + content_width + 24)
+    section_count = len(SAMPLE_SECTIONS) + 1
+    height = TITLE_HEIGHT + PANEL_PADDING_Y * 2 + section_count * line_height + (section_count - 1) * LINE_GAP + 24
 
     image = Image.new("RGBA", (width, height), BG_COLOR)
     if ui_panel_path is not None:
@@ -117,9 +143,15 @@ def render_sheet(glyphs: dict[str, dict], output_path: Path, title: str, ui_pane
     draw.text((PANEL_PADDING_X, 8), title, fill=TITLE_COLOR)
 
     baseline_y = TITLE_HEIGHT + PANEL_PADDING_Y
-    for idx, line in enumerate(SAMPLE_LINES):
+    sample_x = PANEL_PADDING_X + label_width + LABEL_GAP
+    for idx, (label, line) in enumerate(SAMPLE_SECTIONS):
         y = baseline_y + idx * (line_height + LINE_GAP)
-        render_line(image, glyphs, line, PANEL_PADDING_X, y)
+        draw.text((PANEL_PADDING_X, y + 2), f"{label}:", fill=LABEL_COLOR, font=label_font)
+        render_line(image, glyphs, line, sample_x, y)
+
+    footer_y = baseline_y + len(SAMPLE_SECTIONS) * (line_height + LINE_GAP)
+    draw.text((PANEL_PADDING_X, footer_y + 2), "And more:", fill=LABEL_COLOR, font=label_font)
+    render_line(image, glyphs, total_text, sample_x, footer_y)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     image.save(output_path)
