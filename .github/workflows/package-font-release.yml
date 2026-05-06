@@ -1,0 +1,32 @@
+name: Package Font Release
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  package:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Package Release Bundle
+        run: python build-scripts/package_release_bundle.py
+
+      - name: Upload Release Bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: stardew-official-cyrillic-project
+          path: |
+            final-build/release-bundles/Stardew-Official-Cyrillic-Release.zip
+            final-build/release-bundles/Stardew-Official-Cyrillic-Source.zip
+            final-build/release-bundles/build-report.json

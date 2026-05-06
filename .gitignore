@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+
+# Local backups created during iterative font installs/builds
+*.bak_before_*
+
+# Generated reports
+build-report.json
+**/build-report.json
+
+# Regenerable build outputs
+font-family-work/generated-small-sprite-regular/
