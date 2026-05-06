@@ -25,8 +25,8 @@ jobs:
       - name: Upload Release Bundle
         uses: actions/upload-artifact@v4
         with:
-          name: stardew-official-cyrillic-project
+          name: stardew-cyrillic-fonts
           path: |
-            final-build/release-bundles/Stardew-Official-Cyrillic-Release.zip
-            final-build/release-bundles/Stardew-Official-Cyrillic-Source.zip
+            final-build/release-bundles/Stardew-Cyrillic-Fonts-Release.zip
+            final-build/release-bundles/Stardew-Cyrillic-Fonts-Source.zip
             final-build/release-bundles/build-report.json

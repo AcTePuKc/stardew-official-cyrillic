@@ -96,7 +96,7 @@ def main() -> int:
     output_root = family_root / "generated-small-sprite-regular"
     output_root.mkdir(parents=True, exist_ok=True)
 
-    font_path = family_root / "StardewValleyOfficialCyrillicBG-Regular.ttf"
+    font_path = family_root / "StardewValleyCyrillicBG-Regular.ttf"
     metadata = json.loads((project_root / "russian-bg-work" / "glyphs_augmented.json").read_text(encoding="utf-8"))
     characters = "".join(glyph["char"] for glyph in metadata["glyphs"])
     mod_fonts_dir = project_root.parent.parent / "assets" / "Content" / "Fonts"

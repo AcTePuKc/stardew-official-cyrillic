@@ -10,9 +10,9 @@ RELEASE_INCLUDE = [
     "BUILD.md",
     "LICENSE-CODE",
     "ASSET-NOTICE.md",
-    "font-family-work/StardewValleyOfficialCyrillicBG-Regular.ttf",
-    "font-family-work/StardewValleyOfficialCyrillicBG-Bold.ttf",
-    "font-family-work/StardewValleyOfficialCyrillicBG-Italic.ttf",
+    "font-family-work/StardewValleyCyrillicBG-Regular.ttf",
+    "font-family-work/StardewValleyCyrillicBG-Bold.ttf",
+    "font-family-work/StardewValleyCyrillicBG-Italic.ttf",
     "font-family-work/generated-cyrillic-bold/Cyrillic.fnt",
     "font-family-work/generated-cyrillic-bold/Cyrillic_0.png",
     "final-build/glyph-previews",
@@ -30,9 +30,9 @@ SOURCE_INCLUDE = [
     "russian-bg-work",
     "russian-bg-bold-work",
     "russian-bg-italic-work",
-    "font-family-work/StardewValleyOfficialCyrillicBG-Regular.ttf",
-    "font-family-work/StardewValleyOfficialCyrillicBG-Bold.ttf",
-    "font-family-work/StardewValleyOfficialCyrillicBG-Italic.ttf",
+    "font-family-work/StardewValleyCyrillicBG-Regular.ttf",
+    "font-family-work/StardewValleyCyrillicBG-Bold.ttf",
+    "font-family-work/StardewValleyCyrillicBG-Italic.ttf",
     "final-build/glyph-previews",
 ]
 
@@ -95,12 +95,12 @@ def main() -> int:
 
     release_report = build_zip(
         project_root,
-        dist_dir / "Stardew-Official-Cyrillic-Release.zip",
+        dist_dir / "Stardew-Cyrillic-Fonts-Release.zip",
         RELEASE_INCLUDE,
     )
     source_report = build_zip(
         project_root,
-        dist_dir / "Stardew-Official-Cyrillic-Source.zip",
+        dist_dir / "Stardew-Cyrillic-Fonts-Source.zip",
         SOURCE_INCLUDE,
     )
 

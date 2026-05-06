@@ -6,9 +6,9 @@ from pathlib import Path
 from fontTools.ttLib import TTFont
 
 
-FAMILY_NAME = "Stardew Valley Official Cyrillic BG"
-MANUFACTURER = "Stardew Official Cyrillic Project"
-DESIGNER = "Bitmap reconstruction and Bulgarian Cyrillic extension for Stardew Valley (Latin, Cyrillic, UI symbols)"
+FAMILY_NAME = "Stardew Valley Cyrillic BG"
+MANUFACTURER = "Stardew Cyrillic Fonts"
+DESIGNER = "Community reconstruction and Bulgarian Cyrillic extension for Stardew Valley (Latin, Cyrillic, UI symbols)"
 
 
 def set_name(font: TTFont, name_id: int, value: str) -> None:
@@ -58,7 +58,7 @@ def configure_font(font: TTFont, *, style_name: str, full_name: str, ps_name: st
 def build_member(source_path: Path, dest_path: Path, *, style_name: str, ps_suffix: str, weight: int, italic: bool, bold: bool) -> dict[str, str]:
     font = TTFont(source_path)
     full_name = f"{FAMILY_NAME} {style_name}"
-    ps_name = f"StardewValleyOfficialCyrillicBG-{ps_suffix}"
+    ps_name = f"StardewValleyCyrillicBG-{ps_suffix}"
     version = "Version 1.0"
     unique_id = f"{full_name} 1.0"
     configure_font(
@@ -87,14 +87,14 @@ def main() -> int:
     family_root = project_root / "font-family-work"
     family_root.mkdir(parents=True, exist_ok=True)
 
-    regular_src = project_root / "russian-bg-work" / "OfficialRussianCyrillicBGPrototypeV2.ttf"
-    bold_src = project_root / "russian-bg-bold-work" / "OfficialRussianCyrillicBGBoldPrototypeV1.ttf"
-    italic_src = project_root / "russian-bg-italic-work" / "OfficialRussianCyrillicBGItalicPrototypeV3.ttf"
+    regular_src = project_root / "russian-bg-work" / "RussianCyrillicBGPrototypeV2.ttf"
+    bold_src = project_root / "russian-bg-bold-work" / "RussianCyrillicBGBoldPrototypeV1.ttf"
+    italic_src = project_root / "russian-bg-italic-work" / "RussianCyrillicBGItalicPrototypeV3.ttf"
 
     members = [
         build_member(
             regular_src,
-            family_root / "StardewValleyOfficialCyrillicBG-Regular.ttf",
+            family_root / "StardewValleyCyrillicBG-Regular.ttf",
             style_name="Regular",
             ps_suffix="Regular",
             weight=400,
@@ -103,7 +103,7 @@ def main() -> int:
         ),
         build_member(
             bold_src,
-            family_root / "StardewValleyOfficialCyrillicBG-Bold.ttf",
+            family_root / "StardewValleyCyrillicBG-Bold.ttf",
             style_name="Bold",
             ps_suffix="Bold",
             weight=700,
@@ -112,7 +112,7 @@ def main() -> int:
         ),
         build_member(
             italic_src,
-            family_root / "StardewValleyOfficialCyrillicBG-Italic.ttf",
+            family_root / "StardewValleyCyrillicBG-Italic.ttf",
             style_name="Italic",
             ps_suffix="Italic",
             weight=400,

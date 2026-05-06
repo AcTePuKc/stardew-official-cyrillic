@@ -1,6 +1,6 @@
-# Stardew Official Cyrillic Project
+# Stardew Cyrillic Fonts
 
-Community reconstruction of a Stardew Valley-style font family with Bulgarian-complete Cyrillic support.
+Community reconstruction of Stardew Valley's fan Cyrillic font family and BG-complete font assets.
 
 ## License
 

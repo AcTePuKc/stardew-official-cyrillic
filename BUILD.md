@@ -43,9 +43,9 @@ python build-scripts/assemble_official_russian_bg_family.py
 
 This produces:
 
-- `font-family-work/StardewValleyOfficialCyrillicBG-Regular.ttf`
-- `font-family-work/StardewValleyOfficialCyrillicBG-Bold.ttf`
-- `font-family-work/StardewValleyOfficialCyrillicBG-Italic.ttf`
+- `font-family-work/StardewValleyCyrillicBG-Regular.ttf`
+- `font-family-work/StardewValleyCyrillicBG-Bold.ttf`
+- `font-family-work/StardewValleyCyrillicBG-Italic.ttf`
 
 ## Generate large Cyrillic BMFont assets
 
@@ -81,9 +81,9 @@ python build-scripts/render_glyph_contact_sheets.py
 
 This updates:
 
-- `final-build/glyph-previews/regular_glyph_contact_sheet.png`
-- `final-build/glyph-previews/bold_glyph_contact_sheet.png`
-- `final-build/glyph-previews/italic_glyph_contact_sheet.png`
+- `final-build/glyph-previews/regular_glyph_preview.png`
+- `final-build/glyph-previews/bold_glyph_preview.png`
+- `final-build/glyph-previews/italic_glyph_preview.png`
 
 ## Package a public archive
 

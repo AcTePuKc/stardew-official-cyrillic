@@ -1,7 +1,7 @@
 {
   "source": {
-    "fnt": "F:\\SteamLibrary\\steamapps\\common\\Stardew Valley\\Mods\\[CP] Stardew Valley - BG\\font-work\\Stardew-Official-Cyrillic-Project\\source-assets\\Russian.fnt",
-    "atlas": "F:\\SteamLibrary\\steamapps\\common\\Stardew Valley\\Mods\\[CP] Stardew Valley - BG\\font-work\\Stardew-Official-Cyrillic-Project\\source-assets\\Russian_0.png"
+    "fnt": "source-assets/Russian.fnt",
+    "atlas": "source-assets/Russian_0.png"
   },
   "common": {
     "lineHeight": 15,

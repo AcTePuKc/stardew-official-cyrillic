@@ -116,7 +116,7 @@ def main() -> int:
     output_dir = family_root / "generated-cyrillic-bold"
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    ttf_path = family_root / "StardewValleyOfficialCyrillicBG-Bold.ttf"
+    ttf_path = family_root / "StardewValleyCyrillicBG-Bold.ttf"
     metadata = json.loads((project_root / "russian-bg-work" / "glyphs_augmented.json").read_text(encoding="utf-8"))
     characters = "".join(glyph["char"] for glyph in metadata["glyphs"])
 
